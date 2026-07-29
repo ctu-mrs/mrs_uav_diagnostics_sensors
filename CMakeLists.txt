@@ -72,8 +72,9 @@ target_sources(MrsRobotDiagnostics_SensorPlugins
 )
 
 target_link_libraries(MrsRobotDiagnostics_SensorPlugins
-  PRIVATE
+  PUBLIC
     mrs_uav_managers::mrs_uav_managers
+  PRIVATE
     nlohmann_json::nlohmann_json
 )
 
