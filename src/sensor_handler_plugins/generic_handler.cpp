@@ -56,4 +56,4 @@ void GenericSensorHandler::messageCallback([[maybe_unused]] const std::shared_pt
 } // namespace mrs_robot_diagnostics
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::generic_handler::GenericSensorHandler, mrs_robot_diagnostics::SensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::generic_handler::GenericSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)

@@ -171,4 +171,4 @@ mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
 } // namespace mrs_robot_diagnostics
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::camera_handler::CameraSensorHandler, mrs_robot_diagnostics::SensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::camera_handler::CameraSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)

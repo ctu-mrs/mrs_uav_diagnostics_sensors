@@ -39,4 +39,4 @@ std::vector<diagnostic_msgs::msg::KeyValue> RCSensorHandler::fill_details() {
 } // namespace mrs_robot_diagnostics
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::rc_handler::RCSensorHandler, mrs_robot_diagnostics::SensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::rc_handler::RCSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)

@@ -1,27 +1,27 @@
 <library path="MrsRobotDiagnostics_SensorPlugins">
   <class name="mrs_robot_diagnostics/GenericSensorHandler"
     type="mrs_robot_diagnostics::generic_handler::GenericSensorHandler"
-    base_class_type="mrs_robot_diagnostics::SensorHandler">
+    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
     <description>Generic sensor handler for monitoring topic publish rate</description>
   </class>
   <class name="mrs_robot_diagnostics/GNSSSensorHandler"
     type="mrs_robot_diagnostics::gnss_handler::GNSSSensorHandler"
-    base_class_type="mrs_robot_diagnostics::SensorHandler">
+    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
     <description>GNSS sensor handler for monitoring GNSS topic publish rate and satellite count</description>
   </class>
   <class name="mrs_robot_diagnostics/MagnetometerSensorHandler"
     type="mrs_robot_diagnostics::magnetometer_handler::MagnetometerSensorHandler"
-    base_class_type="mrs_robot_diagnostics::SensorHandler">
+    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
     <description>Magnetometer sensor handler for monitoring magnetometer topic publish rate</description>
   </class>
   <class name="mrs_robot_diagnostics/RCSensorHandler"
     type="mrs_robot_diagnostics::rc_handler::RCSensorHandler"
-    base_class_type="mrs_robot_diagnostics::SensorHandler">
+    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
     <description>Remote controller handler for monitoring RC topic publish rate and signal strength</description>
   </class>
   <class name="mrs_robot_diagnostics/CameraSensorHandler"
     type="mrs_robot_diagnostics::camera_handler::CameraSensorHandler"
-    base_class_type="mrs_robot_diagnostics::SensorHandler">
+    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
     <description>Camera handler for monitoring camera publish rate and gimbal orientation</description>
   </class>
 </library>

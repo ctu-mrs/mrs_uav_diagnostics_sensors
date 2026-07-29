@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mrs_robot_diagnostics/sensor_handler.hpp>
+#include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 #include <sensor_msgs/msg/magnetic_field.hpp>
 
 namespace mrs_robot_diagnostics
@@ -8,7 +8,7 @@ namespace mrs_robot_diagnostics
 namespace magnetometer_handler
 {
 
-class MagnetometerSensorHandler : public mrs_robot_diagnostics::SensorHandler {
+class MagnetometerSensorHandler : public mrs_uav_managers::DiagnosticsSensorHandler {
 public:
   bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space,
                     rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override;

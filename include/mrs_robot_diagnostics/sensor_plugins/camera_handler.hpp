@@ -3,7 +3,7 @@
 #include <atomic>
 #include <memory>
 
-#include <mrs_robot_diagnostics/sensor_handler.hpp>
+#include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 
 #include <sensor_msgs/msg/camera_info.hpp>
 #include <std_msgs/msg/float32_multi_array.hpp>
@@ -20,7 +20,7 @@ namespace mrs_robot_diagnostics
 namespace camera_handler
 {
 
-class CameraSensorHandler : public mrs_robot_diagnostics::SensorHandler {
+class CameraSensorHandler : public mrs_uav_managers::DiagnosticsSensorHandler {
 public:
   CameraSensorHandler() = default;
 

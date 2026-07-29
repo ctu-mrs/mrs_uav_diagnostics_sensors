@@ -35,95 +35,20 @@ set(DEPENDENCIES
   rclcpp_components
   mrs_msgs
   mrs_lib
+  mrs_uav_managers
   nav_msgs
   tf2_ros
   pluginlib
   diagnostic_msgs
-  nlohmann_json
 )
 
 set(LIBRARIES
-  MrsRobotDiagnostics_MrsRobotDiagnostics
-  MrsRobotDiagnostics_StateMonitor
   MrsRobotDiagnostics_SensorPlugins
 )
 
 foreach(DEP IN LISTS DEPENDENCIES)
   find_package(${DEP} REQUIRED)
 endforeach()
-
-## --------------------------------------------------------------
-## |                      Shared Library                     |
-## --------------------------------------------------------------
-
-# Shared library for the plugin API
-add_library(MrsRobotDiagnostics_MrsRobotDiagnostics SHARED
-  src/sensor_handler.cpp
-)
-add_library(mrs_robot_diagnostics::mrs_robot_diagnostics ALIAS MrsRobotDiagnostics_MrsRobotDiagnostics)
-
-set_target_properties(MrsRobotDiagnostics_MrsRobotDiagnostics
-  PROPERTIES
-    EXPORT_NAME mrs_robot_diagnostics
-    OUTPUT_NAME mrs_robot_diagnostics
-)
-
-target_sources(MrsRobotDiagnostics_MrsRobotDiagnostics
-  PUBLIC FILE_SET HEADERS BASE_DIRS "include"
-  FILES
-    "include/mrs_robot_diagnostics/create_main_subscriber.tpp"
-    "include/mrs_robot_diagnostics/enums/helpers/enum_helpers.hpp"
-    "include/mrs_robot_diagnostics/enums/helpers/enum_macros.hpp"
-    "include/mrs_robot_diagnostics/enums/robot_type.hpp"
-    "include/mrs_robot_diagnostics/enums/tracker_state.hpp"
-    "include/mrs_robot_diagnostics/enums/uav_state.hpp"
-    "include/mrs_robot_diagnostics/sensor_handler.hpp"
-)
-
-target_link_libraries(MrsRobotDiagnostics_MrsRobotDiagnostics
-  PUBLIC
-    rclcpp::rclcpp
-    rclcpp_components::component
-    pluginlib::pluginlib
-    mrs_lib::mrs_lib
-    ${mrs_msgs_TARGETS}
-    tf2_ros::tf2_ros
-    ${diagnostic_msgs_TARGETS}
-)
-
-## --------------------------------------------------------------
-## |                           Compile                          |
-## --------------------------------------------------------------
-
-## | ------------ MrsRobotDiagnostics_StateMonitor ------------ |
-
-add_library(MrsRobotDiagnostics_StateMonitor SHARED
-  src/preflight_checker.cpp
-  src/state_monitor.cpp
-  src/utils/flight_timer.cpp
-  src/utils/host_stats.cpp
-  src/utils/wh_drained_integrator.cpp
-)
-
-target_sources(MrsRobotDiagnostics_StateMonitor
-  PUBLIC FILE_SET HEADERS BASE_DIRS "include"
-  FILES
-    "include/mrs_robot_diagnostics/preflight_checker.hpp"
-    "include/mrs_robot_diagnostics/state_monitor.hpp"
-    "include/mrs_robot_diagnostics/utils/flight_timer.hpp"
-    "include/mrs_robot_diagnostics/utils/host_stats.hpp"
-    "include/mrs_robot_diagnostics/utils/rate_tracker.hpp"
-    "include/mrs_robot_diagnostics/utils/wh_drained_integrator.hpp"
-)
-
-target_link_libraries(MrsRobotDiagnostics_StateMonitor
-  PRIVATE
-    mrs_robot_diagnostics::mrs_robot_diagnostics  
-)
-
-rclcpp_components_register_nodes(MrsRobotDiagnostics_StateMonitor "mrs_robot_diagnostics::state_monitor::StateMonitor")
-
-target_compile_definitions(MrsRobotDiagnostics_StateMonitor PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})
 
 ## | -------------- MrsRobotDiagnostics_SensorPlugins --------------- |
 
@@ -147,7 +72,7 @@ target_sources(MrsRobotDiagnostics_SensorPlugins
 
 target_link_libraries(MrsRobotDiagnostics_SensorPlugins
   PRIVATE
-    mrs_robot_diagnostics::mrs_robot_diagnostics
+    mrs_uav_managers::mrs_uav_managers
 )
 
 target_compile_definitions(MrsRobotDiagnostics_SensorPlugins PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})
@@ -156,7 +81,7 @@ target_compile_definitions(MrsRobotDiagnostics_SensorPlugins PRIVATE USE_ROS_TIM
 ## |                       Export plugins                       |
 ## --------------------------------------------------------------
 
-pluginlib_export_plugin_description_file(mrs_robot_diagnostics plugins.xml)
+pluginlib_export_plugin_description_file(mrs_uav_managers plugins.xml)
 
 ## --------------------------------------------------------------
 ## |                           Testing                          |
@@ -187,17 +112,7 @@ install(
 )
 
 install(
-  DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(
   DIRECTORY scripts
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(
-  DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
 )
 

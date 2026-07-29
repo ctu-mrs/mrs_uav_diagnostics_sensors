@@ -65,4 +65,4 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
 } // namespace mrs_robot_diagnostics
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::magnetometer_handler::MagnetometerSensorHandler, mrs_robot_diagnostics::SensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::magnetometer_handler::MagnetometerSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
