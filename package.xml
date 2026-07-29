@@ -10,9 +10,10 @@
 
   <maintainer email="spurny@fly4future.com">Vojtech Spurny</maintainer>
   <maintainer email="rivera@fly4future.com">Marlon Rivera</maintainer>
-  <author email="spurny@fly4future.com">Vojtech Spurny</author>
 
   <license>MIT</license>
+
+  <author email="spurny@fly4future.com">Vojtech Spurny</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
