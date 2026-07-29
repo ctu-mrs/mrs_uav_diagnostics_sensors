@@ -42,10 +42,6 @@ windows:
       panes:
         - ros2 launch mrs_uav_autostart automatic_start.launch.py custom_config:=./config/automatic_start.yaml
         - waitForCore && ./takeoff.sh
-  - diagnostics_manager:
-      layout: tiled
-      panes:
-        - ros2 launch mrs_uav_managers diagnostics_manager.launch.py custom_config:=./config/custom_config.yaml
   - topic_echos:
       layout: tiled
       panes:

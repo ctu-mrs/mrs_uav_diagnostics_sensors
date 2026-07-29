@@ -36,10 +36,6 @@ windows:
           world_config:=./config/world_config.yaml
           custom_config:=./config/custom_config.yaml
           network_config:=./config/network_config.yaml
-  - diagnostics:
-      layout: tiled
-      panes:
-        - ros2 launch mrs_uav_managers diagnostics_manager.launch.py
   - status:
       layout: tiled
       panes:
