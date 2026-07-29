@@ -40,6 +40,7 @@ set(DEPENDENCIES
   tf2_ros
   pluginlib
   diagnostic_msgs
+  nlohmann_json
 )
 
 set(LIBRARIES
@@ -73,6 +74,7 @@ target_sources(MrsRobotDiagnostics_SensorPlugins
 target_link_libraries(MrsRobotDiagnostics_SensorPlugins
   PRIVATE
     mrs_uav_managers::mrs_uav_managers
+    nlohmann_json::nlohmann_json
 )
 
 target_compile_definitions(MrsRobotDiagnostics_SensorPlugins PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})

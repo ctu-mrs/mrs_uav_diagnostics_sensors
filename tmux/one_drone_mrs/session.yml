@@ -45,17 +45,17 @@ windows:
   - state_monitor:
       layout: tiled
       panes:
-        - ros2 launch mrs_robot_diagnostics state_monitor.launch.py custom_config:=./config/custom_config.yaml
+        - ros2 launch mrs_uav_managers diagnostics_manager.launch.py custom_config:=./config/custom_config.yaml
   - topic_echos:
       layout: tiled
       panes:
-        - ros2 topic echo /uav1/state_monitor/collision_avoidance_info
-        - ros2 topic echo /uav1/state_monitor/control_info
-        - ros2 topic echo /uav1/state_monitor/general_robot_info
-        - ros2 topic echo /uav1/state_monitor/state_estimation_info
-        - ros2 topic echo /uav1/state_monitor/system_health_info
-        - ros2 topic echo /uav1/state_monitor/uav_info
-        - ros2 topic echo /uav1/state_monitor/uav_state
+        - ros2 topic echo /uav1/diagnostics_manager/collision_avoidance_info
+        - ros2 topic echo /uav1/diagnostics_manager/control_info
+        - ros2 topic echo /uav1/diagnostics_manager/general_robot_info
+        - ros2 topic echo /uav1/diagnostics_manager/state_estimation_info
+        - ros2 topic echo /uav1/diagnostics_manager/system_health_info
+        - ros2 topic echo /uav1/diagnostics_manager/uav_info
+        - ros2 topic echo /uav1/diagnostics_manager/uav_state
   - commands:
       layout: tiled
       panes:

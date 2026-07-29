@@ -169,7 +169,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    topic_name = f"/{args.robot_name}/state_monitor/system_health_info"
+    topic_name = f"/{args.robot_name}/diagnostics_manager/system_health_info"
 
     rclpy.init()
     bridge = SystemHealthBridge(topic_name=topic_name)
