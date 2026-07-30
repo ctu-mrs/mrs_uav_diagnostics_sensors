@@ -1,10 +1,4 @@
-# mrs_uav_diagnostics_sensors
- 
-## StateMonitor
+# MRS UAV Diagnostics Sensors
 
-### How to run
-
-```bash
-roslaunch mrs_uav_diagnostics_sensors state_monitor.launch
-```
-
+`DiagnosticsSensorHandler` plugins for `mrs_uav_managers`'s `DiagnosticsManager`: GNSS,
+camera, generic, magnetometer, and remote controller.
