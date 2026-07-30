@@ -7,6 +7,8 @@ namespace mrs_uav_diagnostics_sensors
 namespace generic_handler
 {
 
+/* onInitialize() //{ */
+
 bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, [[maybe_unused]] const std::string &name_space,
                                         const std::string &plugin_config_path, rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
@@ -47,6 +49,10 @@ bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std
   return true;
 }
 
+//}
+
+/* messageCallback() //{ */
+
 void GenericSensorHandler::messageCallback([[maybe_unused]] const std::shared_ptr<const rclcpp::SerializedMessage> &msg) {
   const rclcpp::Time now = rclcpp::Clock(RCL_STEADY_TIME).now();
   rate_tracker_.record(now);
@@ -56,6 +62,8 @@ void GenericSensorHandler::messageCallback([[maybe_unused]] const std::shared_pt
     state_.last_msg_wall_time = now;
   }
 }
+
+//}
 
 } // namespace generic_handler
 } // namespace mrs_uav_diagnostics_sensors

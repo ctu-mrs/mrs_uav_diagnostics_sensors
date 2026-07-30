@@ -18,6 +18,8 @@ namespace mrs_uav_diagnostics_sensors
 
 namespace camera_handler
 {
+/* onInitialize() //{ */
+
 bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space,
                                        const std::string &plugin_config_path, rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
@@ -70,6 +72,10 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
   is_initialized_ = true;
   return true;
 }
+
+//}
+
+/* updateStatus() //{ */
 
 mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
   mrs_msgs::msg::SensorStatus ss_msg;
@@ -171,6 +177,8 @@ mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
   // Return the camera status
   return ss_msg;
 }
+
+//}
 
 } // namespace camera_handler
 } // namespace mrs_uav_diagnostics_sensors
