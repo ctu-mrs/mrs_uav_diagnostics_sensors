@@ -1,27 +1,27 @@
 <library path="MrsUavDiagnosticsSensors_SensorPlugins">
   <class name="mrs_uav_diagnostics_sensors/GenericSensorHandler"
     type="mrs_uav_diagnostics_sensors::generic_handler::GenericSensorHandler"
-    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
+    base_class_type="mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler">
     <description>Generic sensor handler for monitoring topic publish rate</description>
   </class>
   <class name="mrs_uav_diagnostics_sensors/GNSSSensorHandler"
     type="mrs_uav_diagnostics_sensors::gnss_handler::GNSSSensorHandler"
-    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
+    base_class_type="mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler">
     <description>GNSS sensor handler for monitoring GNSS topic publish rate and satellite count</description>
   </class>
   <class name="mrs_uav_diagnostics_sensors/MagnetometerSensorHandler"
     type="mrs_uav_diagnostics_sensors::magnetometer_handler::MagnetometerSensorHandler"
-    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
+    base_class_type="mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler">
     <description>Magnetometer sensor handler for monitoring magnetometer topic publish rate</description>
   </class>
   <class name="mrs_uav_diagnostics_sensors/RCSensorHandler"
     type="mrs_uav_diagnostics_sensors::rc_handler::RCSensorHandler"
-    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
+    base_class_type="mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler">
     <description>Remote controller handler for monitoring RC topic publish rate and signal strength</description>
   </class>
   <class name="mrs_uav_diagnostics_sensors/CameraSensorHandler"
     type="mrs_uav_diagnostics_sensors::camera_handler::CameraSensorHandler"
-    base_class_type="mrs_uav_managers::DiagnosticsSensorHandler">
+    base_class_type="mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler">
     <description>Camera handler for monitoring camera publish rate and gimbal orientation</description>
   </class>
 </library>

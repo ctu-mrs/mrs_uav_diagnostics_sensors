@@ -4,12 +4,10 @@
 #include <sensor_msgs/msg/nav_sat_fix.hpp>
 #include <mrs_msgs/msg/gps_info.hpp>
 
-namespace mrs_uav_diagnostics_sensors
-{
-namespace gnss_handler
+namespace mrs_uav_diagnostics_sensors::gnss_handler
 {
 
-class GNSSSensorHandler : public mrs_uav_managers::DiagnosticsSensorHandler {
+class GNSSSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
 public:
   bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space, const std::string &plugin_config_path,
                     rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override;
@@ -21,5 +19,4 @@ private:
   mrs_lib::SubscriberHandler<mrs_msgs::msg::GpsInfo>      sh_gnss_status_;
 };
 
-} // namespace gnss_handler
-} // namespace mrs_uav_diagnostics_sensors
+} // namespace mrs_uav_diagnostics_sensors::gnss_handler

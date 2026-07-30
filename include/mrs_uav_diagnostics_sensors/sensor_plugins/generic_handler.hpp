@@ -4,12 +4,10 @@
 #include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 #include <rclcpp/generic_subscription.hpp>
 
-namespace mrs_uav_diagnostics_sensors
-{
-namespace generic_handler
+namespace mrs_uav_diagnostics_sensors::generic_handler
 {
 
-class GenericSensorHandler : public mrs_uav_managers::DiagnosticsSensorHandler {
+class GenericSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
 public:
   bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space, const std::string &plugin_config_path,
                     rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override final;
@@ -22,5 +20,4 @@ private:
   void messageCallback(const std::shared_ptr<const rclcpp::SerializedMessage> &msg);
 };
 
-} // namespace generic_handler
-} // namespace mrs_uav_diagnostics_sensors
+} // namespace mrs_uav_diagnostics_sensors::generic_handler

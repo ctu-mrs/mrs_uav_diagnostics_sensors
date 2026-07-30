@@ -13,10 +13,7 @@
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
 
-namespace mrs_uav_diagnostics_sensors
-{
-
-namespace camera_handler
+namespace mrs_uav_diagnostics_sensors::camera_handler
 {
 /* onInitialize() //{ */
 
@@ -180,8 +177,7 @@ mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
 
 //}
 
-} // namespace camera_handler
-} // namespace mrs_uav_diagnostics_sensors
+} // namespace mrs_uav_diagnostics_sensors::camera_handler
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::camera_handler::CameraSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::camera_handler::CameraSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)

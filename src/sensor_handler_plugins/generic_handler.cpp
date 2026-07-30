@@ -2,9 +2,7 @@
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
 
-namespace mrs_uav_diagnostics_sensors
-{
-namespace generic_handler
+namespace mrs_uav_diagnostics_sensors::generic_handler
 {
 
 /* onInitialize() //{ */
@@ -65,8 +63,7 @@ void GenericSensorHandler::messageCallback([[maybe_unused]] const std::shared_pt
 
 //}
 
-} // namespace generic_handler
-} // namespace mrs_uav_diagnostics_sensors
+} // namespace mrs_uav_diagnostics_sensors::generic_handler
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::generic_handler::GenericSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::generic_handler::GenericSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)

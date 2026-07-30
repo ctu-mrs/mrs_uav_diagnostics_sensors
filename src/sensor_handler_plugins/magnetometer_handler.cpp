@@ -1,9 +1,7 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/magnetometer_handler.hpp>
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/detail_builder.hpp>
 
-namespace mrs_uav_diagnostics_sensors
-{
-namespace magnetometer_handler
+namespace mrs_uav_diagnostics_sensors::magnetometer_handler
 {
 
 /* onInitialize() //{ */
@@ -50,8 +48,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
 
 //}
 
-} // namespace magnetometer_handler
-} // namespace mrs_uav_diagnostics_sensors
+} // namespace mrs_uav_diagnostics_sensors::magnetometer_handler
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::magnetometer_handler::MagnetometerSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::magnetometer_handler::MagnetometerSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)

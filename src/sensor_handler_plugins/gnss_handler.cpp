@@ -3,9 +3,7 @@
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
 
-namespace mrs_uav_diagnostics_sensors
-{
-namespace gnss_handler
+namespace mrs_uav_diagnostics_sensors::gnss_handler
 {
 
 /* onInitialize() //{ */
@@ -83,8 +81,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
 
 //}
 
-} // namespace gnss_handler
-} // namespace mrs_uav_diagnostics_sensors
+} // namespace mrs_uav_diagnostics_sensors::gnss_handler
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::gnss_handler::GNSSSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::gnss_handler::GNSSSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
