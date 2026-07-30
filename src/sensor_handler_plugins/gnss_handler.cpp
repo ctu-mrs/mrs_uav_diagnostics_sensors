@@ -1,4 +1,5 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp>
+#include <mrs_uav_diagnostics_sensors/sensor_plugins/detail_builder.hpp>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
 
@@ -6,6 +7,8 @@ namespace mrs_uav_diagnostics_sensors
 {
 namespace gnss_handler
 {
+
+/* onInitialize() //{ */
 
 bool GNSSSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, [[maybe_unused]] const std::string &name_space,
                                      const std::string &plugin_config_path, [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
@@ -42,6 +45,10 @@ bool GNSSSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::s
   return true;
 }
 
+//}
+
+/* fill_details() //{ */
+
 std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
 
   std::vector<diagnostic_msgs::msg::KeyValue> details;
@@ -51,53 +58,30 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
 
   if (!gnss_msg) {
     // Initialize with default values if no GNSS data has been received yet
-    diagnostic_msgs::msg::KeyValue info;
-    info.key   = "uncertainty";
-    info.value = "nan";
-    details.push_back(info);
-    info.key   = "quality";
-    info.value = "nan";
-    details.push_back(info);
+    details.push_back(make_detail("uncertainty", "nan"));
+    details.push_back(make_detail("quality", "nan"));
   } else {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key                  = "uncertainty";
-    const Eigen::Matrix3d cov = cov2eigen(gnss_msg->position_covariance);
-    info.value                = std::to_string(std::cbrt(cov.determinant()));
-    details.push_back(info);
-    info.key         = "quality";
-    double gnss_qual = (gnss_msg->position_covariance[0] + gnss_msg->position_covariance[4] + gnss_msg->position_covariance[8]) / 3;
-    info.value       = std::to_string(gnss_qual);
-    details.push_back(info);
+    const Eigen::Matrix3d cov       = cov2eigen(gnss_msg->position_covariance);
+    const double          gnss_qual = (gnss_msg->position_covariance[0] + gnss_msg->position_covariance[4] + gnss_msg->position_covariance[8]) / 3;
+    details.push_back(make_detail("uncertainty", std::to_string(std::cbrt(cov.determinant()))));
+    details.push_back(make_detail("quality", std::to_string(gnss_qual)));
   }
 
   if (!gnss_status_msg) {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key   = "fix_type";
-    info.value = "nan";
-    details.push_back(info);
-    info.key   = "num_satellites";
-    info.value = "nan";
-    details.push_back(info);
-    info.key   = "position_accuracy";
-    info.value = "nan";
-    details.push_back(info);
+    details.push_back(make_detail("fix_type", "nan"));
+    details.push_back(make_detail("num_satellites", "nan"));
+    details.push_back(make_detail("position_accuracy", "nan"));
   } else {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key   = "fix_type";
-    info.value = std::to_string(gnss_status_msg->fix_type);
-    details.push_back(info);
-    info.key   = "num_satellites";
-    info.value = std::to_string(gnss_status_msg->satellites_visible);
-    details.push_back(info);
-    // Position accuracy
-    info.key                 = "position_accuracy";
-    double position_accuracy = (gnss_status_msg->h_acc + gnss_status_msg->v_acc) / 2.0;
-    info.value               = std::to_string(position_accuracy);
-    details.push_back(info);
+    const double position_accuracy = (gnss_status_msg->h_acc + gnss_status_msg->v_acc) / 2.0;
+    details.push_back(make_detail("fix_type", std::to_string(gnss_status_msg->fix_type)));
+    details.push_back(make_detail("num_satellites", std::to_string(gnss_status_msg->satellites_visible)));
+    details.push_back(make_detail("position_accuracy", std::to_string(position_accuracy)));
   }
 
   return details;
 }
+
+//}
 
 } // namespace gnss_handler
 } // namespace mrs_uav_diagnostics_sensors

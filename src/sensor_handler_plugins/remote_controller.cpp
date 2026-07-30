@@ -1,9 +1,12 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp>
+#include <mrs_uav_diagnostics_sensors/sensor_plugins/detail_builder.hpp>
 
 namespace mrs_uav_diagnostics_sensors
 {
 namespace rc_handler
 {
+
+/* onInitialize() //{ */
 
 bool RCSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
                                    [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
@@ -15,6 +18,10 @@ bool RCSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused
   return true;
 }
 
+//}
+
+/* fill_details() //{ */
+
 std::vector<diagnostic_msgs::msg::KeyValue> RCSensorHandler::fill_details() {
 
   std::vector<diagnostic_msgs::msg::KeyValue> details;
@@ -22,19 +29,15 @@ std::vector<diagnostic_msgs::msg::KeyValue> RCSensorHandler::fill_details() {
   auto rc_rssi_msg = sh_rc_rssi_.getMsg();
 
   if (!rc_rssi_msg) {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key   = "rssi";
-    info.value = "nan";
-    details.push_back(info);
+    details.push_back(make_detail("rssi", "nan"));
   } else {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key   = "rssi";
-    info.value = std::to_string(rc_rssi_msg->rssi);
-    details.push_back(info);
+    details.push_back(make_detail("rssi", std::to_string(rc_rssi_msg->rssi)));
   }
 
   return details;
 }
+
+//}
 
 } // namespace rc_handler
 } // namespace mrs_uav_diagnostics_sensors

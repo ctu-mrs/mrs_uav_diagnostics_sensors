@@ -1,9 +1,12 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/magnetometer_handler.hpp>
+#include <mrs_uav_diagnostics_sensors/sensor_plugins/detail_builder.hpp>
 
 namespace mrs_uav_diagnostics_sensors
 {
 namespace magnetometer_handler
 {
+
+/* onInitialize() //{ */
 
 bool MagnetometerSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
                                              [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
@@ -15,6 +18,10 @@ bool MagnetometerSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[ma
   return true;
 }
 
+//}
+
+/* fill_details() //{ */
+
 std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_details() {
 
   std::vector<diagnostic_msgs::msg::KeyValue> details;
@@ -22,45 +29,26 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
   auto magnetic_field_msg = sh_magnetic_field_.getMsg();
 
   if (!magnetic_field_msg) {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key   = "strength";
-    info.value = "nan";
-    details.push_back(info);
-    info.key   = "uncertainty";
-    info.value = "nan";
-    details.push_back(info);
-    info.key   = "norm_gauss";
-    info.value = "nan";
-    details.push_back(info);
-    info.key   = "norm_hz";
-    info.value = std::to_string(getMeasuredRate());
-    details.push_back(info);
+    details.push_back(make_detail("strength", "nan"));
+    details.push_back(make_detail("uncertainty", "nan"));
+    details.push_back(make_detail("norm_gauss", "nan"));
+    details.push_back(make_detail("norm_hz", std::to_string(getMeasuredRate())));
   } else {
-    diagnostic_msgs::msg::KeyValue info;
-    info.key                  = "uncertainty";
     const Eigen::Matrix3d cov = cov2eigen(magnetic_field_msg->magnetic_field_covariance);
-    info.value                = std::to_string(std::cbrt(cov.determinant()));
-    details.push_back(info);
-
     const Eigen::Vector3d mag(magnetic_field_msg->magnetic_field.x, magnetic_field_msg->magnetic_field.y, magnetic_field_msg->magnetic_field.z);
     const double          norm_tesla = mag.norm();
 
-    info.key   = "strength";
-    info.value = std::to_string(norm_tesla);
-    details.push_back(info);
-
+    details.push_back(make_detail("uncertainty", std::to_string(std::cbrt(cov.determinant()))));
+    details.push_back(make_detail("strength", std::to_string(norm_tesla)));
     // sensor_msgs/MagneticField publishes Tesla; the TUI consumes Gauss (1 T = 1e4 G).
-    info.key   = "norm_gauss";
-    info.value = std::to_string(norm_tesla * 1.0e4);
-    details.push_back(info);
-
-    info.key   = "norm_hz";
-    info.value = std::to_string(getMeasuredRate());
-    details.push_back(info);
+    details.push_back(make_detail("norm_gauss", std::to_string(norm_tesla * 1.0e4)));
+    details.push_back(make_detail("norm_hz", std::to_string(getMeasuredRate())));
   }
 
   return details;
 }
+
+//}
 
 } // namespace magnetometer_handler
 } // namespace mrs_uav_diagnostics_sensors
