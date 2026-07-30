@@ -1,0 +1,5 @@
+mrs_uav_managers:
+  diagnostics_manager:
+    sensor_handlers:
+      Rangefinder:
+        message_type: "sensor_msgs/msg/Range"

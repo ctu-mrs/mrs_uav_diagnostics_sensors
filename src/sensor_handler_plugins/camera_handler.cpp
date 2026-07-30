@@ -11,13 +11,15 @@
 
 #include <nlohmann/json.hpp>
 
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
 namespace mrs_robot_diagnostics
 {
 
 namespace camera_handler
 {
-bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
-                                       [[maybe_unused]] const std::string &name_space, rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
+bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space,
+                                       const std::string &plugin_config_path, rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
   mrs_lib::ParamLoader param_loader(node, "CameraSensorHandler");
 
@@ -27,8 +29,11 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_un
     param_loader.addYamlFile(custom_config_path);
   }
 
-  param_loader.addYamlFileFromParam("config");
-  param_loader.setPrefix("robot_diagnostics/sensor_handlers/");
+  const std::string resolved_config_path =
+      plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_robot_diagnostics") + "/config/sensor_plugins/" + config_key + ".yaml"
+                                 : plugin_config_path;
+  param_loader.addYamlFile(resolved_config_path);
+  param_loader.setPrefix("mrs_uav_managers/diagnostics_manager/sensor_handlers/");
 
   // Read CameraSensorHandler-specific params
   std::string gimbal_orientation_topic;
@@ -54,7 +59,7 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_un
 
   if (!gimbal_orientation_topic.empty()) {
     RCLCPP_INFO(node->get_logger(), "[CameraSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), gimbal_orientation_topic.c_str());
-    sh_camera_gimbal_orientation_ = mrs_lib::SubscriberHandler<std_msgs::msg::Float32MultiArray>(shopts_, gimbal_orientation_topic);
+    sh_camera_gimbal_orientation_  = mrs_lib::SubscriberHandler<std_msgs::msg::Float32MultiArray>(shopts_, gimbal_orientation_topic);
     use_camera_gimbal_orientation_ = true;
   }
 
@@ -135,10 +140,10 @@ mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
 
   nlohmann::json camera_orientation_json;
   if (use_camera_gimbal_orientation_ && sh_camera_gimbal_orientation_.hasMsg()) {
-    const auto orientation_msg    = sh_camera_gimbal_orientation_.getMsg();
-    const double roll  = (orientation_msg->data.size() > 0) ? orientation_msg->data[0] : 0.0;
-    const double pitch = (orientation_msg->data.size() > 1) ? orientation_msg->data[1] : 0.0;
-    const double yaw   = (orientation_msg->data.size() > 2) ? orientation_msg->data[2] : 0.0;
+    const auto   orientation_msg = sh_camera_gimbal_orientation_.getMsg();
+    const double roll            = (orientation_msg->data.size() > 0) ? orientation_msg->data[0] : 0.0;
+    const double pitch           = (orientation_msg->data.size() > 1) ? orientation_msg->data[1] : 0.0;
+    const double yaw             = (orientation_msg->data.size() > 2) ? orientation_msg->data[2] : 0.0;
 
     camera_orientation_json = {
         {"orientation_rpy",

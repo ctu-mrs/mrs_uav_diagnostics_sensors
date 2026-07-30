@@ -6,7 +6,8 @@ namespace magnetometer_handler
 {
 
 bool MagnetometerSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
-                                       [[maybe_unused]] const std::string &name_space, [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
+                                             [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
+                                             [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
   RCLCPP_INFO(node->get_logger(), "[MagnetometerSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), topic_.c_str());
 

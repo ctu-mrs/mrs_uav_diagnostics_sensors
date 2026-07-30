@@ -1,12 +1,14 @@
 #include <mrs_robot_diagnostics/sensor_plugins/generic_handler.hpp>
 
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
 namespace mrs_robot_diagnostics
 {
 namespace generic_handler
 {
 
 bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, [[maybe_unused]] const std::string &name_space,
-                                        rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
+                                        const std::string &plugin_config_path, rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
   mrs_lib::ParamLoader param_loader(node, "GenericSensorHandler");
 
@@ -16,8 +18,11 @@ bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std
     param_loader.addYamlFile(custom_config_path);
   }
 
-  param_loader.addYamlFileFromParam("config");
-  param_loader.setPrefix("robot_diagnostics/sensor_handlers/");
+  const std::string resolved_config_path =
+      plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_robot_diagnostics") + "/config/sensor_plugins/" + config_key + ".yaml"
+                                 : plugin_config_path;
+  param_loader.addYamlFile(resolved_config_path);
+  param_loader.setPrefix("mrs_uav_managers/diagnostics_manager/sensor_handlers/");
 
   // Read GenericSensorHandler-specific params
   std::string message_type;

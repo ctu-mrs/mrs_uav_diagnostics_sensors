@@ -41,6 +41,7 @@ set(DEPENDENCIES
   pluginlib
   diagnostic_msgs
   nlohmann_json
+  ament_index_cpp
 )
 
 set(LIBRARIES
@@ -76,6 +77,7 @@ target_link_libraries(MrsRobotDiagnostics_SensorPlugins
     mrs_uav_managers::mrs_uav_managers
   PRIVATE
     nlohmann_json::nlohmann_json
+    ament_index_cpp::ament_index_cpp
 )
 
 target_compile_definitions(MrsRobotDiagnostics_SensorPlugins PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})
@@ -116,6 +118,11 @@ install(
 
 install(
   DIRECTORY scripts
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
 )
 

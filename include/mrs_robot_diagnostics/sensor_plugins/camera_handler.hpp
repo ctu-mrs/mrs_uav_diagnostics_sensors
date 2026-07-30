@@ -24,8 +24,8 @@ class CameraSensorHandler : public mrs_uav_managers::DiagnosticsSensorHandler {
 public:
   CameraSensorHandler() = default;
 
-  bool                        onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space,
-                                           rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override;
+  bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space, const std::string &plugin_config_path,
+                    rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override;
   mrs_msgs::msg::SensorStatus updateStatus() override;
 
 
@@ -34,9 +34,9 @@ private:
 
   mrs_lib::SubscriberHandler<sensor_msgs::msg::CameraInfo>     sh_camera_info_;
   mrs_lib::SubscriberHandler<std_msgs::msg::Float32MultiArray> sh_camera_gimbal_orientation_;
-  std::atomic_bool use_camera_gimbal_orientation_ = false;
+  std::atomic_bool                                             use_camera_gimbal_orientation_ = false;
 
-  mrs_lib::PublisherHandler<mrs_msgs::msg::SensorInfo>         ph_camera_details_;
+  mrs_lib::PublisherHandler<mrs_msgs::msg::SensorInfo> ph_camera_details_;
 
   std::unique_ptr<tf2_ros::Buffer>            tf_buffer_;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;

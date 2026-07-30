@@ -1,0 +1,5 @@
+mrs_uav_managers:
+  diagnostics_manager:
+    sensor_handlers:
+      GNSS:
+        status_topic: "hw_api/gnss_status"

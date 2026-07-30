@@ -5,8 +5,9 @@ namespace mrs_robot_diagnostics
 namespace rc_handler
 {
 
-bool RCSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key, [[maybe_unused]] const std::string &name_space,
-                             [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
+bool RCSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
+                                   [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
+                                   [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
   RCLCPP_INFO(node->get_logger(), "[RCSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), topic_.c_str());
 
