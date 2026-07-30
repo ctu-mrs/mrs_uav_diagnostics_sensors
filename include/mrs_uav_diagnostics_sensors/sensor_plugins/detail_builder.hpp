@@ -7,6 +7,8 @@
 namespace mrs_uav_diagnostics_sensors
 {
 
+/* make_detail() //{ */
+
 /**
  * @brief Build a single diagnostic_msgs::msg::KeyValue detail entry.
  * Used by fill_details() overrides to cut the repeated key/value/push_back boilerplate.
@@ -17,5 +19,7 @@ inline diagnostic_msgs::msg::KeyValue make_detail(const std::string &key, const 
   info.value = value;
   return info;
 }
+
+//}
 
 } // namespace mrs_uav_diagnostics_sensors
