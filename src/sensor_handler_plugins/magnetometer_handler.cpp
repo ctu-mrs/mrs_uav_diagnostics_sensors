@@ -1,6 +1,6 @@
-#include <mrs_robot_diagnostics/sensor_plugins/magnetometer_handler.hpp>
+#include <mrs_uav_diagnostics_sensors/sensor_plugins/magnetometer_handler.hpp>
 
-namespace mrs_robot_diagnostics
+namespace mrs_uav_diagnostics_sensors
 {
 namespace magnetometer_handler
 {
@@ -63,7 +63,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
 }
 
 } // namespace magnetometer_handler
-} // namespace mrs_robot_diagnostics
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::magnetometer_handler::MagnetometerSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::magnetometer_handler::MagnetometerSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)

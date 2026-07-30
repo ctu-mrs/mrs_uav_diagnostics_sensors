@@ -14,7 +14,7 @@
 #include <tf2_ros/buffer.h>
 
 
-namespace mrs_robot_diagnostics
+namespace mrs_uav_diagnostics_sensors
 {
 
 namespace camera_handler
@@ -43,4 +43,4 @@ private:
 };
 
 } // namespace camera_handler
-} // namespace mrs_robot_diagnostics
+} // namespace mrs_uav_diagnostics_sensors

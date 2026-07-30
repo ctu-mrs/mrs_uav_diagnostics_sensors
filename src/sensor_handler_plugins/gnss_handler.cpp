@@ -1,8 +1,8 @@
-#include <mrs_robot_diagnostics/sensor_plugins/gnss_handler.hpp>
+#include <mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
 
-namespace mrs_robot_diagnostics
+namespace mrs_uav_diagnostics_sensors
 {
 namespace gnss_handler
 {
@@ -18,9 +18,9 @@ bool GNSSSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::s
     param_loader.addYamlFile(custom_config_path);
   }
 
-  const std::string resolved_config_path =
-      plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_robot_diagnostics") + "/config/sensor_plugins/" + config_key + ".yaml"
-                                 : plugin_config_path;
+  const std::string resolved_config_path = plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_uav_diagnostics_sensors") +
+                                                                            "/config/sensor_plugins/" + config_key + ".yaml"
+                                                                      : plugin_config_path;
   param_loader.addYamlFile(resolved_config_path);
   param_loader.setPrefix("mrs_uav_managers/diagnostics_manager/sensor_handlers/");
 
@@ -100,7 +100,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
 }
 
 } // namespace gnss_handler
-} // namespace mrs_robot_diagnostics
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::gnss_handler::GNSSSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::gnss_handler::GNSSSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)

@@ -4,7 +4,7 @@
 #include <sensor_msgs/msg/nav_sat_fix.hpp>
 #include <mrs_msgs/msg/gps_info.hpp>
 
-namespace mrs_robot_diagnostics
+namespace mrs_uav_diagnostics_sensors
 {
 namespace gnss_handler
 {
@@ -22,4 +22,4 @@ private:
 };
 
 } // namespace gnss_handler
-} // namespace mrs_robot_diagnostics
+} // namespace mrs_uav_diagnostics_sensors

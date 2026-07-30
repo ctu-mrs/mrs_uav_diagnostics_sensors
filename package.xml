@@ -2,11 +2,10 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
 
-  <name>mrs_robot_diagnostics</name>
+  <name>mrs_uav_diagnostics_sensors</name>
   <version>2.0.0</version>
-  <description> An aggregator of states of key components from the MRS (Multi-Robot System) serves
-    as a centralized monitoring system to provide real-time insights into the current status of the
-    entire robotic system. </description>
+  <description>Concrete DiagnosticsSensorHandler plugin implementations (GNSS, camera, generic,
+    magnetometer, remote controller) for mrs_uav_managers's DiagnosticsManager.</description>
 
   <maintainer email="spurny@fly4future.com">Vojtech Spurny</maintainer>
   <maintainer email="rivera@fly4future.com">Marlon Rivera</maintainer>

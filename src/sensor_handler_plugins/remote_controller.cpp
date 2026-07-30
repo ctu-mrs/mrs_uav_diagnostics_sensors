@@ -1,6 +1,6 @@
-#include <mrs_robot_diagnostics/sensor_plugins/remote_controller.hpp>
+#include <mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp>
 
-namespace mrs_robot_diagnostics
+namespace mrs_uav_diagnostics_sensors
 {
 namespace rc_handler
 {
@@ -37,7 +37,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> RCSensorHandler::fill_details() {
 }
 
 } // namespace rc_handler
-} // namespace mrs_robot_diagnostics
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_robot_diagnostics::rc_handler::RCSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::rc_handler::RCSensorHandler, mrs_uav_managers::DiagnosticsSensorHandler)

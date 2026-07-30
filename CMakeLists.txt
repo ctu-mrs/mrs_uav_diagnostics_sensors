@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(mrs_robot_diagnostics)
+project(mrs_uav_diagnostics_sensors)
 
 # set the correct standards
 set(CMAKE_C_STANDARD 99)
@@ -12,7 +12,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(USE_ROS_TIMER 0)
 
 if(${USE_ROS_TIMER})
-  MESSAGE(WARNING "[mrs_robot_diagnostics]: Compiling with ROS Timers. This can cause high CPU load in runtime.")
+  MESSAGE(WARNING "[mrs_uav_diagnostics_sensors]: Compiling with ROS Timers. This can cause high CPU load in runtime.")
 endif()
 
 # set the compile options to show code warnings
@@ -45,16 +45,16 @@ set(DEPENDENCIES
 )
 
 set(LIBRARIES
-  MrsRobotDiagnostics_SensorPlugins
+  MrsUavDiagnosticsSensors_SensorPlugins
 )
 
 foreach(DEP IN LISTS DEPENDENCIES)
   find_package(${DEP} REQUIRED)
 endforeach()
 
-## | -------------- MrsRobotDiagnostics_SensorPlugins --------------- |
+## | -------------- MrsUavDiagnosticsSensors_SensorPlugins --------------- |
 
-add_library(MrsRobotDiagnostics_SensorPlugins SHARED
+add_library(MrsUavDiagnosticsSensors_SensorPlugins SHARED
   src/sensor_handler_plugins/camera_handler.cpp
   src/sensor_handler_plugins/generic_handler.cpp
   src/sensor_handler_plugins/gnss_handler.cpp
@@ -62,17 +62,17 @@ add_library(MrsRobotDiagnostics_SensorPlugins SHARED
   src/sensor_handler_plugins/remote_controller.cpp
 )
 
-target_sources(MrsRobotDiagnostics_SensorPlugins
+target_sources(MrsUavDiagnosticsSensors_SensorPlugins
   PUBLIC FILE_SET HEADERS BASE_DIRS "include"
   FILES
-    "include/mrs_robot_diagnostics/sensor_plugins/camera_handler.hpp"
-    "include/mrs_robot_diagnostics/sensor_plugins/generic_handler.hpp"
-    "include/mrs_robot_diagnostics/sensor_plugins/gnss_handler.hpp"
-    "include/mrs_robot_diagnostics/sensor_plugins/magnetometer_handler.hpp"
-    "include/mrs_robot_diagnostics/sensor_plugins/remote_controller.hpp"
+    "include/mrs_uav_diagnostics_sensors/sensor_plugins/camera_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/sensor_plugins/generic_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/sensor_plugins/magnetometer_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp"
 )
 
-target_link_libraries(MrsRobotDiagnostics_SensorPlugins
+target_link_libraries(MrsUavDiagnosticsSensors_SensorPlugins
   PUBLIC
     mrs_uav_managers::mrs_uav_managers
   PRIVATE
@@ -80,7 +80,7 @@ target_link_libraries(MrsRobotDiagnostics_SensorPlugins
     ament_index_cpp::ament_index_cpp
 )
 
-target_compile_definitions(MrsRobotDiagnostics_SensorPlugins PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})
+target_compile_definitions(MrsUavDiagnosticsSensors_SensorPlugins PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})
 
 ## --------------------------------------------------------------
 ## |                       Export plugins                       |

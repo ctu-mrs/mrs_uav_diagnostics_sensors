@@ -4,7 +4,7 @@
 #include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 #include <rclcpp/generic_subscription.hpp>
 
-namespace mrs_robot_diagnostics
+namespace mrs_uav_diagnostics_sensors
 {
 namespace generic_handler
 {
@@ -23,4 +23,4 @@ private:
 };
 
 } // namespace generic_handler
-} // namespace mrs_robot_diagnostics
+} // namespace mrs_uav_diagnostics_sensors
