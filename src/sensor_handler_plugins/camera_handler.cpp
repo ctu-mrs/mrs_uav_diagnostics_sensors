@@ -123,7 +123,8 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
   }
 
   nlohmann::json camera_orientation_json;
-  if (use_camera_gimbal_orientation_ && sh_camera_gimbal_orientation_.hasMsg()) {
+  if (use_camera_gimbal_orientation_ && sh_camera_gimbal_orientation_.hasMsg() &&
+      isTopicFresh(shopts_.node->get_clock()->now(), sh_camera_gimbal_orientation_.lastMsgTime())) {
     const auto   orientation_msg = sh_camera_gimbal_orientation_.getMsg();
     const double roll            = (orientation_msg->data.size() > 0) ? orientation_msg->data[0] : 0.0;
     const double pitch           = (orientation_msg->data.size() > 1) ? orientation_msg->data[1] : 0.0;
