@@ -55,16 +55,14 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
   auto gnss_msg        = sh_gnns_.getMsg();
   auto gnss_status_msg = sh_gnss_status_.getMsg();
 
-  if (!gnss_msg) {
-    // Initialize with default values if no GNSS data has been received yet
-    details.push_back(make_detail("uncertainty", "nan"));
-    details.push_back(make_detail("quality", "nan"));
-  } else {
-    const Eigen::Matrix3d cov       = cov2eigen(gnss_msg->position_covariance);
-    const double          gnss_qual = (gnss_msg->position_covariance[0] + gnss_msg->position_covariance[4] + gnss_msg->position_covariance[8]) / 3;
-    details.push_back(make_detail("uncertainty", std::to_string(std::pow(cov.determinant(), 1.0 / 6.0))));
-    details.push_back(make_detail("quality", std::to_string(gnss_qual)));
+  std::optional<double> uncertainty, quality;
+  if (gnss_msg) {
+    const Eigen::Matrix3d cov = cov2eigen(gnss_msg->position_covariance);
+    uncertainty               = std::pow(cov.determinant(), 1.0 / 6.0);
+    quality                   = (gnss_msg->position_covariance[0] + gnss_msg->position_covariance[4] + gnss_msg->position_covariance[8]) / 3;
   }
+  details.push_back(make_detail("uncertainty", uncertainty));
+  details.push_back(make_detail("quality", quality));
 
   if (!gnss_status_msg || !isTopicFresh(shopts_.node->get_clock()->now(), sh_gnss_status_.lastMsgTime())) {
     details.push_back(make_detail("fix_type", "nan"));

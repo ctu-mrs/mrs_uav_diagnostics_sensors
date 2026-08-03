@@ -26,22 +26,21 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
 
   auto magnetic_field_msg = sh_magnetic_field_.getMsg();
 
-  if (!magnetic_field_msg) {
-    details.push_back(make_detail("strength", "nan"));
-    details.push_back(make_detail("uncertainty", "nan"));
-    details.push_back(make_detail("norm_gauss", "nan"));
-    details.push_back(make_detail("norm_hz", std::to_string(getMeasuredRate())));
-  } else {
+  std::optional<double> uncertainty, strength, norm_gauss;
+  if (magnetic_field_msg) {
     const Eigen::Matrix3d cov = cov2eigen(magnetic_field_msg->magnetic_field_covariance);
     const Eigen::Vector3d mag(magnetic_field_msg->magnetic_field.x, magnetic_field_msg->magnetic_field.y, magnetic_field_msg->magnetic_field.z);
     const double          norm_tesla = mag.norm();
 
-    details.push_back(make_detail("uncertainty", std::to_string(std::pow(cov.determinant(), 1.0 / 6.0))));
-    details.push_back(make_detail("strength", std::to_string(norm_tesla)));
+    uncertainty = std::pow(cov.determinant(), 1.0 / 6.0);
+    strength    = norm_tesla;
     // sensor_msgs/MagneticField publishes Tesla; the TUI consumes Gauss (1 T = 1e4 G).
-    details.push_back(make_detail("norm_gauss", std::to_string(norm_tesla * 1.0e4)));
-    details.push_back(make_detail("norm_hz", std::to_string(getMeasuredRate())));
+    norm_gauss = norm_tesla * 1.0e4;
   }
+  details.push_back(make_detail("uncertainty", uncertainty));
+  details.push_back(make_detail("strength", strength));
+  details.push_back(make_detail("norm_gauss", norm_gauss));
+  details.push_back(make_detail("norm_hz", std::to_string(getMeasuredRate())));
 
   return details;
 }
