@@ -61,7 +61,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
   } else {
     const Eigen::Matrix3d cov       = cov2eigen(gnss_msg->position_covariance);
     const double          gnss_qual = (gnss_msg->position_covariance[0] + gnss_msg->position_covariance[4] + gnss_msg->position_covariance[8]) / 3;
-    details.push_back(make_detail("uncertainty", std::to_string(std::cbrt(cov.determinant()))));
+    details.push_back(make_detail("uncertainty", std::to_string(std::pow(cov.determinant(), 1.0 / 6.0))));
     details.push_back(make_detail("quality", std::to_string(gnss_qual)));
   }
 

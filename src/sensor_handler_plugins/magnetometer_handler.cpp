@@ -36,7 +36,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
     const Eigen::Vector3d mag(magnetic_field_msg->magnetic_field.x, magnetic_field_msg->magnetic_field.y, magnetic_field_msg->magnetic_field.z);
     const double          norm_tesla = mag.norm();
 
-    details.push_back(make_detail("uncertainty", std::to_string(std::cbrt(cov.determinant()))));
+    details.push_back(make_detail("uncertainty", std::to_string(std::pow(cov.determinant(), 1.0 / 6.0))));
     details.push_back(make_detail("strength", std::to_string(norm_tesla)));
     // sensor_msgs/MagneticField publishes Tesla; the TUI consumes Gauss (1 T = 1e4 G).
     details.push_back(make_detail("norm_gauss", std::to_string(norm_tesla * 1.0e4)));
@@ -51,4 +51,5 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
 } // namespace mrs_uav_diagnostics_sensors::magnetometer_handler
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::magnetometer_handler::MagnetometerSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::magnetometer_handler::MagnetometerSensorHandler,
+                       mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
