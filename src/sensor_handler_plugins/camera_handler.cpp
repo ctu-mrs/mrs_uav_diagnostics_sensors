@@ -31,6 +31,9 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
   const std::string resolved_config_path = plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_uav_diagnostics_sensors") +
                                                                             "/config/sensor_plugins/" + config_key + ".yaml"
                                                                       : plugin_config_path;
+  // Return value intentionally unchecked: unlike GNSS/Generic, none of this handler's fields below are compulsory, so a missing
+  // file here just means "use code defaults", which is expected for a fresh instance with no plugin-specific overrides. A
+  // malformed file still logs an RCLCPP_ERROR from within addYamlFile() itself, it just doesn't fail this load.
   param_loader.addYamlFile(resolved_config_path);
   param_loader.setPrefix("mrs_uav_managers/diagnostics_manager/sensor_handlers/");
 
