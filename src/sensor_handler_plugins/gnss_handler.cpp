@@ -71,8 +71,10 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
     details.push_back(make_detail("position_accuracy", "nan"));
   } else {
     const double position_accuracy = (gnss_status_msg->h_acc + gnss_status_msg->v_acc) / 2.0;
+    // GpsInfo.msg: satellites_visible is set to 255 when unknown.
+    const std::string num_satellites_str = (gnss_status_msg->satellites_visible == 255) ? "nan" : std::to_string(gnss_status_msg->satellites_visible);
     details.push_back(make_detail("fix_type", std::to_string(gnss_status_msg->fix_type)));
-    details.push_back(make_detail("num_satellites", std::to_string(gnss_status_msg->satellites_visible)));
+    details.push_back(make_detail("num_satellites", num_satellites_str));
     details.push_back(make_detail("position_accuracy", std::to_string(position_accuracy)));
   }
 
