@@ -72,28 +72,14 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
 
 //}
 
-/* updateStatus() //{ */
+/* fill_details() //{ */
 
-mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
-  mrs_msgs::msg::SensorStatus ss_msg;
-  ss_msg.name  = name_;
-  ss_msg.type  = mrs_msgs::msg::SensorStatus::TYPE_CAMERA;
-  ss_msg.topic = topic_;
-
-  if (!is_initialized_) {
-    ss_msg.ready = false;
-    ss_msg.rate  = -1;
-    // ss_msg.status = "NOT_INITIALIZED";
-    return ss_msg;
-  }
+std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() {
 
   geometry_msgs::msg::TransformStamped transform;
   nlohmann::json                       camera_tf_json;
   nlohmann::json                       camera_info_json;
   if (sh_camera_info_.hasMsg()) {
-
-    ss_msg.rate  = getMeasuredRate();
-    ss_msg.ready = true;
 
     auto         msg    = sh_camera_info_.getMsg();
     const double height = msg->height;
@@ -134,11 +120,6 @@ mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
     catch (tf2::TransformException &ex) {
       RCLCPP_WARN(rclcpp::get_logger("CameraSensorHandler"), "%s", ex.what());
     }
-
-  } else {
-    ss_msg.ready = false;
-    ss_msg.rate  = -1;
-    // ss_msg.status = "NO_CAMERA_INFO";
   }
 
   nlohmann::json camera_orientation_json;
@@ -171,8 +152,8 @@ mrs_msgs::msg::SensorStatus CameraSensorHandler::updateStatus() {
   sensor_info_msg.type    = mrs_msgs::msg::SensorStatus::TYPE_CAMERA;
   sensor_info_msg.details = json_str;
   ph_camera_details_.publish(sensor_info_msg);
-  // Return the camera status
-  return ss_msg;
+
+  return {};
 }
 
 //}

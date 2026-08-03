@@ -23,7 +23,8 @@ public:
 
   bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space, const std::string &plugin_config_path,
                     rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override;
-  mrs_msgs::msg::SensorStatus updateStatus() override;
+
+  std::vector<diagnostic_msgs::msg::KeyValue> fill_details() override;
 
 
 private:
