@@ -32,11 +32,9 @@ endif()
 
 set(DEPENDENCIES
   rclcpp
-  rclcpp_components
   mrs_msgs
   mrs_lib
   mrs_uav_managers
-  nav_msgs
   tf2_ros
   pluginlib
   diagnostic_msgs
