@@ -31,6 +31,7 @@ bool GNSSSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::s
 
   if (!param_loader.loadedSuccessfully()) {
     RCLCPP_ERROR(node->get_logger(), "[GNSSSensorHandler] Failed to load config for '%s', not initializing", config_key.c_str());
+    error_publisher_->addOneshotError("Failed to load config for " + name_);
     return false;
   }
 

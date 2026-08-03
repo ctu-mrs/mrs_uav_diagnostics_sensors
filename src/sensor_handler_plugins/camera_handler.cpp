@@ -45,6 +45,7 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
 
   if (!param_loader.loadedSuccessfully()) {
     RCLCPP_ERROR(node->get_logger(), "[CameraSensorHandler] Failed to load config for '%s', not initializing", name_.c_str());
+    error_publisher_->addOneshotError("Failed to load config for " + name_);
     return false;
   }
 
