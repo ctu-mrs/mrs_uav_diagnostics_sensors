@@ -87,15 +87,15 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
     const double fx     = msg->k[0];
     const double fy     = msg->k[4];
 
-    const double fov_x = 2 * atan(width / (2 * fx));
-    const double fov_y = 2 * atan(height / (2 * fy));
-
     camera_info_json = {
         {"height", height},
         {"width", width},
-        {"fov_x_rad", fov_x},
-        {"fov_y_rad", fov_y},
     };
+
+    if (fx > 0.0 && fy > 0.0) {
+      camera_info_json["fov_x_rad"] = 2 * atan(width / (2 * fx));
+      camera_info_json["fov_y_rad"] = 2 * atan(height / (2 * fy));
+    }
 
     try {
       transform = tf_buffer_->lookupTransform(_fcu_frame_, sh_camera_info_.getMsg()->header.frame_id, tf2::TimePointZero);
