@@ -112,7 +112,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
       };
     }
     catch (tf2::TransformException &ex) {
-      RCLCPP_WARN(rclcpp::get_logger("CameraSensorHandler"), "%s", ex.what());
+      RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: %s", name_.c_str(), ex.what());
     }
   }
 
