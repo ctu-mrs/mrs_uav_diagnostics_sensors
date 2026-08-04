@@ -28,11 +28,10 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
 
   std::optional<double> uncertainty, strength, norm_gauss;
   if (magnetic_field_msg) {
-    const Eigen::Matrix3d cov = cov2eigen(magnetic_field_msg->magnetic_field_covariance);
     const Eigen::Vector3d mag(magnetic_field_msg->magnetic_field.x, magnetic_field_msg->magnetic_field.y, magnetic_field_msg->magnetic_field.z);
     const double          norm_tesla = mag.norm();
 
-    uncertainty = std::pow(cov.determinant(), 1.0 / 6.0);
+    uncertainty = covUncertainty(magnetic_field_msg->magnetic_field_covariance);
     strength    = norm_tesla;
     // sensor_msgs/MagneticField publishes Tesla; the TUI consumes Gauss (1 T = 1e4 G).
     norm_gauss = norm_tesla * 1.0e4;
