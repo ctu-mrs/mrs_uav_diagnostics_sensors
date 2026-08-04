@@ -7,14 +7,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# 1 == use rclcpp::Timer implementation
-# 0 == use MRS's thread timer implementation
-set(USE_ROS_TIMER 0)
-
-if(${USE_ROS_TIMER})
-  MESSAGE(WARNING "[mrs_uav_diagnostics_sensors]: Compiling with ROS Timers. This can cause high CPU load in runtime.")
-endif()
-
 # set the compile options to show code warnings
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -79,8 +71,6 @@ target_link_libraries(MrsUavDiagnosticsSensors_SensorPlugins
     nlohmann_json::nlohmann_json
     ament_index_cpp::ament_index_cpp
 )
-
-target_compile_definitions(MrsUavDiagnosticsSensors_SensorPlugins PRIVATE USE_ROS_TIMER=${USE_ROS_TIMER})
 
 ## --------------------------------------------------------------
 ## |                       Export plugins                       |
