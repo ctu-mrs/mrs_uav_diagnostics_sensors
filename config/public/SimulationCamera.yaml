@@ -1,7 +1,7 @@
 mrs_uav_managers:
   diagnostics_manager:
     sensor_handlers:
-      SimulationCamera:
+      SimulationCamera: {}
         # CameraSensorHandler-specific fields (all optional, defaults apply if omitted):
         # gimbal_orientation_topic: ""
         # sensor_info_publisher_topic: "~/sensor_info"
