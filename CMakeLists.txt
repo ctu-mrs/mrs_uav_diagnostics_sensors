@@ -40,6 +40,8 @@ set(DEPENDENCIES
   diagnostic_msgs
   nlohmann_json
   ament_index_cpp
+  sensor_msgs
+  std_msgs
 )
 
 set(LIBRARIES
