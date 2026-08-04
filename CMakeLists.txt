@@ -62,6 +62,8 @@ target_sources(MrsUavDiagnosticsSensors_SensorPlugins
     "include/mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp"
     "include/mrs_uav_diagnostics_sensors/sensor_plugins/magnetometer_handler.hpp"
     "include/mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp"
+    "include/mrs_uav_diagnostics_sensors/utils/detail_builder.hpp"
+    "include/mrs_uav_diagnostics_sensors/utils/plugin_config.hpp"
 )
 
 target_link_libraries(MrsUavDiagnosticsSensors_SensorPlugins
