@@ -40,7 +40,6 @@ std::vector<diagnostic_msgs::msg::KeyValue> MagnetometerSensorHandler::fill_deta
   details.push_back(make_detail("uncertainty", uncertainty));
   details.push_back(make_detail("strength", strength));
   details.push_back(make_detail("norm_gauss", norm_gauss));
-  details.push_back(make_detail("norm_hz", std::to_string(getMeasuredRate())));
 
   return details;
 }
