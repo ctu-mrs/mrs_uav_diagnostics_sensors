@@ -15,7 +15,7 @@
     <description>Magnetometer sensor handler for monitoring magnetometer topic publish rate</description>
   </class>
   <class name="mrs_uav_diagnostics_sensors/RCSensorHandler"
-    type="mrs_uav_diagnostics_sensors::rc_handler::RCSensorHandler"
+    type="mrs_uav_diagnostics_sensors::remote_controller_handler::RemoteControllerSensorHandler"
     base_class_type="mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler">
     <description>Remote controller handler for monitoring RC topic publish rate and signal strength</description>
   </class>

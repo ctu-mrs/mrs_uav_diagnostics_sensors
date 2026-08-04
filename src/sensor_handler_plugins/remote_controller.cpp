@@ -1,14 +1,14 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp>
 #include <mrs_uav_diagnostics_sensors/utils/detail_builder.hpp>
 
-namespace mrs_uav_diagnostics_sensors::rc_handler
+namespace mrs_uav_diagnostics_sensors::remote_controller_handler
 {
 
 /* onInitialize() //{ */
 
-bool RCSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
-                                   [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
-                                   [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
+bool RemoteControllerSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused]] const std::string &config_key,
+                                                 [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
+                                                 [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
   RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), topic_.c_str());
 
@@ -20,7 +20,7 @@ bool RCSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[maybe_unused
 
 /* fill_details() //{ */
 
-std::vector<diagnostic_msgs::msg::KeyValue> RCSensorHandler::fill_details() {
+std::vector<diagnostic_msgs::msg::KeyValue> RemoteControllerSensorHandler::fill_details() {
 
   std::vector<diagnostic_msgs::msg::KeyValue> details;
 
@@ -37,7 +37,8 @@ std::vector<diagnostic_msgs::msg::KeyValue> RCSensorHandler::fill_details() {
 
 //}
 
-} // namespace mrs_uav_diagnostics_sensors::rc_handler
+} // namespace mrs_uav_diagnostics_sensors::remote_controller_handler
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::rc_handler::RCSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::remote_controller_handler::RemoteControllerSensorHandler,
+                       mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
