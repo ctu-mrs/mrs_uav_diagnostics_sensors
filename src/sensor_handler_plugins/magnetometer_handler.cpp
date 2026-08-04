@@ -10,7 +10,7 @@ bool MagnetometerSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, [[ma
                                              [[maybe_unused]] const std::string &name_space, [[maybe_unused]] const std::string &plugin_config_path,
                                              [[maybe_unused]] rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
-  RCLCPP_INFO(node->get_logger(), "[MagnetometerSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), topic_.c_str());
+  RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), topic_.c_str());
 
   sh_magnetic_field_ = create_main_subscriber<sensor_msgs::msg::MagneticField>(node, topic_, cbkgrp_subs);
   return true;

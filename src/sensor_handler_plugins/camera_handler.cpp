@@ -37,7 +37,7 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
   param_loader.loadParam(config_key + "/fcu_frame", _fcu_frame_, std::string(name_space + "/fcu"));
 
   if (!param_loader.loadedSuccessfully()) {
-    RCLCPP_ERROR(node->get_logger(), "[CameraSensorHandler] Failed to load config for '%s', not initializing", name_.c_str());
+    RCLCPP_ERROR(node->get_logger(), "[%s]: failed to load config, not initializing", name_.c_str());
     error_publisher_->addOneshotError("Failed to load config for " + name_);
     return false;
   }
@@ -47,17 +47,17 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
   tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_, node);
 
   // Create subscriber
-  RCLCPP_INFO(node->get_logger(), "[CameraSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), topic_.c_str());
+  RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), topic_.c_str());
   sh_camera_info_ = create_main_subscriber<sensor_msgs::msg::CameraInfo>(node, topic_, cbkgrp_subs);
 
   if (!gimbal_orientation_topic.empty()) {
-    RCLCPP_INFO(node->get_logger(), "[CameraSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), gimbal_orientation_topic.c_str());
+    RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), gimbal_orientation_topic.c_str());
     sh_camera_gimbal_orientation_  = mrs_lib::SubscriberHandler<std_msgs::msg::Float32MultiArray>(shopts_, gimbal_orientation_topic);
     use_camera_gimbal_orientation_ = true;
   }
 
   // create publisher
-  RCLCPP_INFO(node->get_logger(), "[CameraSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), sensor_info_publisher_topic.c_str());
+  RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), sensor_info_publisher_topic.c_str());
   ph_camera_details_ = mrs_lib::PublisherHandler<mrs_msgs::msg::SensorInfo>(node, sensor_info_publisher_topic);
 
   is_initialized_ = true;

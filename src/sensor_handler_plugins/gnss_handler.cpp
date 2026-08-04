@@ -20,13 +20,13 @@ bool GNSSSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::s
   param_loader.loadParam(config_key + "/status_topic", status_topic);
 
   if (!param_loader.loadedSuccessfully()) {
-    RCLCPP_ERROR(node->get_logger(), "[GNSSSensorHandler] Failed to load config for '%s', not initializing", config_key.c_str());
+    RCLCPP_ERROR(node->get_logger(), "[%s]: failed to load config, not initializing", config_key.c_str());
     error_publisher_->addOneshotError("Failed to load config for " + name_);
     return false;
   }
 
-  RCLCPP_INFO(node->get_logger(), "[GNSSSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), topic_.c_str());
-  RCLCPP_INFO(node->get_logger(), "[GNSSSensorHandler] Initializing '%s', topic: '%s'", name_.c_str(), status_topic.c_str());
+  RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), topic_.c_str());
+  RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), status_topic.c_str());
 
   // Create subscriber handlers for GNSS data and status
   sh_gnns_        = create_main_subscriber<sensor_msgs::msg::NavSatFix>(node, topic_, cbkgrp_subs);

@@ -19,7 +19,7 @@ bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std
   param_loader.loadParam(config_key + "/message_type", message_type);
 
   if (!param_loader.loadedSuccessfully()) {
-    RCLCPP_ERROR(node->get_logger(), "[GenericSensorHandler] Failed to load config for '%s', not initializing", config_key.c_str());
+    RCLCPP_ERROR(node->get_logger(), "[%s]: failed to load config, not initializing", config_key.c_str());
     error_publisher_->addOneshotError("Failed to load config for " + name_);
     return false;
   }
@@ -31,8 +31,8 @@ bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std
   generic_sub_ = node->create_generic_subscription(
       topic_, message_type, qos_profile_, [this](std::shared_ptr<const rclcpp::SerializedMessage> msg) { this->messageCallback(msg); }, sub_options);
 
-  RCLCPP_INFO(node->get_logger(), "[GenericSensorHandler] '%s' initialized: topic='%s', msg_type='%s', expected_rate=%.1f Hz, tolerance=%.0f%%", name_.c_str(),
-              topic_.c_str(), message_type.c_str(), expected_rate_, rate_tolerance_ * 100.0);
+  RCLCPP_INFO(node->get_logger(), "[%s]: initialized: topic='%s', msg_type='%s', expected_rate=%.1f Hz, tolerance=%.0f%%", name_.c_str(), topic_.c_str(),
+              message_type.c_str(), expected_rate_, rate_tolerance_ * 100.0);
 
   return true;
 }
