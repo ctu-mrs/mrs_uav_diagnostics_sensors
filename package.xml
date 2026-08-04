@@ -23,8 +23,8 @@
   <depend>mrs_msgs</depend>
   <depend>mrs_lib</depend>
   <depend>mrs_uav_managers</depend>
-  <depend>tf2_ros</depend>
   <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
   <depend>std_msgs</depend>
   <depend>nlohmann-json-dev</depend>
   <depend>ament_index_cpp</depend>

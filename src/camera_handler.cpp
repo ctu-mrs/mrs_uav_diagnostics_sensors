@@ -4,10 +4,7 @@
 
 #include <geometry_msgs/msg/transform_stamped.hpp>
 
-#include <tf2/exceptions.h>
-#include <tf2/time.h>
-#include <tf2/LinearMath/Matrix3x3.h>
-#include <tf2/LinearMath/Quaternion.h>
+#include <mrs_lib/attitude_converter.h>
 
 #include <nlohmann/json.hpp>
 
@@ -42,9 +39,7 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
     return false;
   }
 
-  // Initialize tf2 components
-  tf_buffer_   = std::make_unique<tf2_ros::Buffer>(node->get_clock());
-  tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_, node);
+  transformer_ = std::make_unique<mrs_lib::Transformer>(node);
 
   // Create subscriber
   RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), topic_.c_str());
@@ -70,9 +65,8 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
 
 std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() {
 
-  geometry_msgs::msg::TransformStamped transform;
-  nlohmann::json                       camera_tf_json;
-  nlohmann::json                       camera_info_json;
+  nlohmann::json camera_tf_json;
+  nlohmann::json camera_info_json;
   if (sh_camera_info_.hasMsg()) {
 
     auto         msg    = sh_camera_info_.getMsg();
@@ -91,28 +85,30 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
       camera_info_json["fov_y_rad"] = 2 * atan(height / (2 * fy));
     }
 
-    try {
-      transform = tf_buffer_->lookupTransform(_fcu_frame_, sh_camera_info_.getMsg()->header.frame_id, tf2::TimePointZero);
-      double x  = transform.transform.translation.x;
-      double y  = transform.transform.translation.y;
-      double z  = transform.transform.translation.z;
+    const auto res_tf = transformer_->getTransform(sh_camera_info_.getMsg()->header.frame_id, _fcu_frame_, rclcpp::Time(0));
+    if (res_tf.has_value()) {
+      const auto &transform = res_tf.value();
+      double      x         = transform.transform.translation.x;
+      double      y         = transform.transform.translation.y;
+      double      z         = transform.transform.translation.z;
 
-      double qx = transform.transform.rotation.x;
-      double qy = transform.transform.rotation.y;
-      double qz = transform.transform.rotation.z;
-      double qw = transform.transform.rotation.w;
+      try {
+        mrs_lib::AttitudeConverter attitude(transform.transform.rotation);
+        const double               roll  = attitude.getRoll();
+        const double               pitch = attitude.getPitch();
+        const double               yaw   = attitude.getYaw();
 
-      tf2::Quaternion q(qx, qy, qz, qw);
-      double          roll, pitch, yaw;
-      tf2::Matrix3x3(q).getRPY(roll, pitch, yaw);
-
-      camera_tf_json = {
-          {"translation", {{"x", x}, {"y", y}, {"z", z}}},
-          {"rotation_rpy", {{"roll", roll}, {"pitch", pitch}, {"yaw", yaw}}},
-      };
-    }
-    catch (tf2::TransformException &ex) {
-      RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: %s", name_.c_str(), ex.what());
+        camera_tf_json = {
+            {"translation", {{"x", x}, {"y", y}, {"z", z}}},
+            {"rotation_rpy", {{"roll", roll}, {"pitch", pitch}, {"yaw", yaw}}},
+        };
+      }
+      catch (const mrs_lib::AttitudeConverter::InvalidAttitudeException &ex) {
+        RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: %s", name_.c_str(), ex.what());
+      }
+    } else {
+      RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: failed to get transform from '%s' to '%s'", name_.c_str(),
+                  sh_camera_info_.getMsg()->header.frame_id.c_str(), _fcu_frame_.c_str());
     }
   }
 

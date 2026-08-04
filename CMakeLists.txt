@@ -27,13 +27,13 @@ set(DEPENDENCIES
   mrs_msgs
   mrs_lib
   mrs_uav_managers
-  tf2_ros
   pluginlib
   diagnostic_msgs
   nlohmann_json
   ament_index_cpp
   sensor_msgs
   std_msgs
+  geometry_msgs
 )
 
 set(LIBRARIES

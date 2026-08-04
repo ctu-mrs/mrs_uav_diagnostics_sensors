@@ -10,9 +10,7 @@
 
 #include <mrs_msgs/msg/sensor_info.hpp>
 
-#include <tf2_ros/transform_listener.h>
-#include <tf2_ros/buffer.h>
-
+#include <mrs_lib/transformer.h>
 
 namespace mrs_uav_diagnostics_sensors
 {
@@ -36,8 +34,7 @@ private:
 
   mrs_lib::PublisherHandler<mrs_msgs::msg::SensorInfo> ph_camera_details_;
 
-  std::unique_ptr<tf2_ros::Buffer>            tf_buffer_;
-  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
+  std::unique_ptr<mrs_lib::Transformer> transformer_;
 };
 
 } // namespace mrs_uav_diagnostics_sensors
