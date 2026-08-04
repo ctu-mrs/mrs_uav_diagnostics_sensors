@@ -42,13 +42,7 @@ bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std
 /* messageCallback() //{ */
 
 void GenericSensorHandler::messageCallback([[maybe_unused]] const std::shared_ptr<const rclcpp::SerializedMessage> &msg) {
-  const rclcpp::Time now = rclcpp::Clock(RCL_STEADY_TIME).now();
-  rate_tracker_.record(now);
-  {
-    std::scoped_lock lock(mutex_state_);
-    state_.msg_count++;
-    state_.last_msg_wall_time = now;
-  }
+  recordMessageReceived();
 }
 
 //}
