@@ -1,5 +1,5 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp>
-#include <mrs_uav_diagnostics_sensors/sensor_plugins/detail_builder.hpp>
+#include <mrs_uav_diagnostics_sensors/utils/detail_builder.hpp>
 
 namespace mrs_uav_diagnostics_sensors::rc_handler
 {

@@ -1,7 +1,7 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp>
-#include <mrs_uav_diagnostics_sensors/sensor_plugins/detail_builder.hpp>
 
-#include <ament_index_cpp/get_package_share_directory.hpp>
+#include <mrs_uav_diagnostics_sensors/utils/detail_builder.hpp>
+#include <mrs_uav_diagnostics_sensors/utils/plugin_config.hpp>
 
 namespace mrs_uav_diagnostics_sensors::gnss_handler
 {
@@ -13,17 +13,7 @@ bool GNSSSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::s
 
   mrs_lib::ParamLoader param_loader(node, "GNSSSensorHandler");
 
-  std::string custom_config_path;
-  param_loader.loadParam("custom_config", custom_config_path, std::string(""));
-  if (!custom_config_path.empty()) {
-    param_loader.addYamlFile(custom_config_path);
-  }
-
-  const std::string resolved_config_path = plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_uav_diagnostics_sensors") +
-                                                                            "/config/sensor_plugins/" + config_key + ".yaml"
-                                                                      : plugin_config_path;
-  param_loader.addYamlFile(resolved_config_path);
-  param_loader.setPrefix("mrs_uav_managers/diagnostics_manager/sensor_handlers/");
+  resolvePluginConfig(param_loader, config_key, plugin_config_path);
 
   // Read GNSSSensorHandler-specific params
   std::string status_topic;

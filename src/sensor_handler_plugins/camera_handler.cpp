@@ -11,7 +11,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include <ament_index_cpp/get_package_share_directory.hpp>
+#include <mrs_uav_diagnostics_sensors/utils/plugin_config.hpp>
 
 namespace mrs_uav_diagnostics_sensors::camera_handler
 {
@@ -22,20 +22,10 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
 
   mrs_lib::ParamLoader param_loader(node, "CameraSensorHandler");
 
-  std::string custom_config_path;
-  param_loader.loadParam("custom_config", custom_config_path, std::string(""));
-  if (!custom_config_path.empty()) {
-    param_loader.addYamlFile(custom_config_path);
-  }
-
-  const std::string resolved_config_path = plugin_config_path.empty() ? ament_index_cpp::get_package_share_directory("mrs_uav_diagnostics_sensors") +
-                                                                            "/config/sensor_plugins/" + config_key + ".yaml"
-                                                                      : plugin_config_path;
-  // Return value intentionally unchecked: unlike GNSS/Generic, none of this handler's fields below are compulsory, so a missing
-  // file here just means "use code defaults", which is expected for a fresh instance with no plugin-specific overrides. A
-  // malformed file still logs an RCLCPP_ERROR from within addYamlFile() itself, it just doesn't fail this load.
-  param_loader.addYamlFile(resolved_config_path);
-  param_loader.setPrefix("mrs_uav_managers/diagnostics_manager/sensor_handlers/");
+  // Load failures from this call are intentionally unchecked below: unlike GNSS/Generic, none of this handler's fields
+  // are compulsory, so a missing file just means "use code defaults", which is expected for a fresh instance with no
+  // plugin-specific overrides. A malformed file still logs an RCLCPP_ERROR from within addYamlFile() itself.
+  resolvePluginConfig(param_loader, config_key, plugin_config_path);
 
   // Read CameraSensorHandler-specific params
   std::string gimbal_orientation_topic;
