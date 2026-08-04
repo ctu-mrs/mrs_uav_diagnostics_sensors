@@ -28,6 +28,16 @@
   <depend>std_msgs</depend>
   <depend>nlohmann-json-dev</depend>
   <depend>ament_index_cpp</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>mrs_uav_testing</depend>
+
+  <!-- Testing -->
+  <test_depend>ament_cmake_ros</test_depend>
+  <test_depend>launch</test_depend>
+  <test_depend>launch_ros</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
 
   <!-- Linters -->
   <test_depend>ament_cmake_clang_format</test_depend>

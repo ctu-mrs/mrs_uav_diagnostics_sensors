@@ -1,0 +1,41 @@
+# GET ALL PARAMETERS USABLE FOR CUSTOM CONFIG BY RUNNING:
+## --------------------------------------------------------------
+## |          rosrun mrs_uav_core get_public_params.py          #
+## --------------------------------------------------------------
+
+mrs_uav_managers:
+
+  estimation_manager:
+
+    # loaded state estimator plugins
+    state_estimators: [
+      "gps_baro",
+      "gps_garmin",
+      "passthrough",
+    ]
+
+    initial_state_estimator: "gps_baro" # will be used as the first state estimator
+    agl_height_estimator: "" # only slightly filtered height for checking min height (not used in control feedback)
+
+  uav_manager:
+
+    midair_activation:
+
+      after_activation:
+        controller: "Se3Controller"
+        tracker: "MpcTracker"
+
+  diagnostics_manager:
+
+    sensor_handlers:
+
+      # every sensor handler plugin provided by this package has to be active here,
+      # the test asserts that all of them come up and report themselves ready
+      active_sensor_handlers: [
+        "PX4",
+        "Rangefinder",
+        "GNSS",
+        "Magnetometer",
+        "RemoteController",
+        "SimulationCamera",
+      ]
