@@ -13,7 +13,7 @@
 
 #include <mrs_uav_diagnostics_sensors/utils/plugin_config.hpp>
 
-namespace mrs_uav_diagnostics_sensors::camera_handler
+namespace mrs_uav_diagnostics_sensors
 {
 /* onInitialize() //{ */
 
@@ -153,7 +153,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
 
 //}
 
-} // namespace mrs_uav_diagnostics_sensors::camera_handler
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::camera_handler::CameraSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::CameraSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)

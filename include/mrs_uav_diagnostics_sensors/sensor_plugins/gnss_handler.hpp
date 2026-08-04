@@ -4,7 +4,7 @@
 #include <sensor_msgs/msg/nav_sat_fix.hpp>
 #include <mrs_msgs/msg/gps_info.hpp>
 
-namespace mrs_uav_diagnostics_sensors::gnss_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 class GNSSSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
@@ -19,4 +19,4 @@ private:
   mrs_lib::SubscriberHandler<mrs_msgs::msg::GpsInfo>      sh_gnss_status_;
 };
 
-} // namespace mrs_uav_diagnostics_sensors::gnss_handler
+} // namespace mrs_uav_diagnostics_sensors

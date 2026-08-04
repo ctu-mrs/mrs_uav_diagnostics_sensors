@@ -3,7 +3,7 @@
 #include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 #include <mrs_msgs/msg/hw_api_rc_rssi.hpp>
 
-namespace mrs_uav_diagnostics_sensors::remote_controller_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 class RemoteControllerSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
@@ -17,4 +17,4 @@ private:
   mrs_lib::SubscriberHandler<mrs_msgs::msg::HwApiRcRssi> sh_rc_rssi_;
 };
 
-} // namespace mrs_uav_diagnostics_sensors::remote_controller_handler
+} // namespace mrs_uav_diagnostics_sensors

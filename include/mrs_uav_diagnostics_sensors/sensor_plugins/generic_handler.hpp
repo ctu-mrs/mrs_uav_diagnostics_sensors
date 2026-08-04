@@ -4,7 +4,7 @@
 #include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 #include <rclcpp/generic_subscription.hpp>
 
-namespace mrs_uav_diagnostics_sensors::generic_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 class GenericSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
@@ -20,4 +20,4 @@ private:
   void messageCallback(const std::shared_ptr<const rclcpp::SerializedMessage> &msg);
 };
 
-} // namespace mrs_uav_diagnostics_sensors::generic_handler
+} // namespace mrs_uav_diagnostics_sensors

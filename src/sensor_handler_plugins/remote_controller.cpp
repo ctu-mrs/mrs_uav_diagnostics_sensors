@@ -1,7 +1,7 @@
 #include <mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp>
 #include <mrs_uav_diagnostics_sensors/utils/detail_builder.hpp>
 
-namespace mrs_uav_diagnostics_sensors::remote_controller_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 /* onInitialize() //{ */
@@ -37,8 +37,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> RemoteControllerSensorHandler::fill_
 
 //}
 
-} // namespace mrs_uav_diagnostics_sensors::remote_controller_handler
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::remote_controller_handler::RemoteControllerSensorHandler,
-                       mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::RemoteControllerSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)

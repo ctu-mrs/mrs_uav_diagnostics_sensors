@@ -3,7 +3,7 @@
 #include <mrs_uav_diagnostics_sensors/utils/detail_builder.hpp>
 #include <mrs_uav_diagnostics_sensors/utils/plugin_config.hpp>
 
-namespace mrs_uav_diagnostics_sensors::gnss_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 /* onInitialize() //{ */
@@ -72,7 +72,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
 
 //}
 
-} // namespace mrs_uav_diagnostics_sensors::gnss_handler
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::gnss_handler::GNSSSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::GNSSSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)

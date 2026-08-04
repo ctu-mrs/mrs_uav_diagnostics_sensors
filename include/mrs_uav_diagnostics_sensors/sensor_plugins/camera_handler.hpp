@@ -14,7 +14,7 @@
 #include <tf2_ros/buffer.h>
 
 
-namespace mrs_uav_diagnostics_sensors::camera_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 class CameraSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
@@ -40,4 +40,4 @@ private:
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 };
 
-} // namespace mrs_uav_diagnostics_sensors::camera_handler
+} // namespace mrs_uav_diagnostics_sensors

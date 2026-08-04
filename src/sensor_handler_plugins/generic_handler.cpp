@@ -2,7 +2,7 @@
 
 #include <mrs_uav_diagnostics_sensors/utils/plugin_config.hpp>
 
-namespace mrs_uav_diagnostics_sensors::generic_handler
+namespace mrs_uav_diagnostics_sensors
 {
 
 /* onInitialize() //{ */
@@ -53,7 +53,7 @@ void GenericSensorHandler::messageCallback([[maybe_unused]] const std::shared_pt
 
 //}
 
-} // namespace mrs_uav_diagnostics_sensors::generic_handler
+} // namespace mrs_uav_diagnostics_sensors
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::generic_handler::GenericSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
+PLUGINLIB_EXPORT_CLASS(mrs_uav_diagnostics_sensors::GenericSensorHandler, mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler)
