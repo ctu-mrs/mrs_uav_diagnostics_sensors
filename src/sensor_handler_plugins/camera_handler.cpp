@@ -148,6 +148,8 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
   sensor_info_msg.details = json_str;
   ph_camera_details_.publish(sensor_info_msg);
 
+  // This data is inherently nested (tf, orientation, camera_info), so it goes out as structured JSON via
+  // SensorInfo above rather than as flat KeyValue pairs here -- see the base class's fill_details() doc comment.
   return {};
 }
 
