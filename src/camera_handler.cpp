@@ -1,4 +1,4 @@
-#include <mrs_uav_diagnostics_sensors/sensor_plugins/camera_handler.hpp>
+#include <mrs_uav_diagnostics_sensors/camera_handler.hpp>
 
 #include <cmath>
 

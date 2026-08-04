@@ -47,21 +47,21 @@ endforeach()
 ## | -------------- MrsUavDiagnosticsSensors_SensorPlugins --------------- |
 
 add_library(MrsUavDiagnosticsSensors_SensorPlugins SHARED
-  src/sensor_handler_plugins/camera_handler.cpp
-  src/sensor_handler_plugins/generic_handler.cpp
-  src/sensor_handler_plugins/gnss_handler.cpp
-  src/sensor_handler_plugins/magnetometer_handler.cpp
-  src/sensor_handler_plugins/remote_controller.cpp
+  src/camera_handler.cpp
+  src/generic_handler.cpp
+  src/gnss_handler.cpp
+  src/magnetometer_handler.cpp
+  src/remote_controller.cpp
 )
 
 target_sources(MrsUavDiagnosticsSensors_SensorPlugins
   PUBLIC FILE_SET HEADERS BASE_DIRS "include"
   FILES
-    "include/mrs_uav_diagnostics_sensors/sensor_plugins/camera_handler.hpp"
-    "include/mrs_uav_diagnostics_sensors/sensor_plugins/generic_handler.hpp"
-    "include/mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp"
-    "include/mrs_uav_diagnostics_sensors/sensor_plugins/magnetometer_handler.hpp"
-    "include/mrs_uav_diagnostics_sensors/sensor_plugins/remote_controller.hpp"
+    "include/mrs_uav_diagnostics_sensors/camera_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/generic_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/gnss_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/magnetometer_handler.hpp"
+    "include/mrs_uav_diagnostics_sensors/remote_controller.hpp"
     "include/mrs_uav_diagnostics_sensors/utils/detail_builder.hpp"
     "include/mrs_uav_diagnostics_sensors/utils/plugin_config.hpp"
 )
@@ -111,6 +111,12 @@ install(
 install(
   DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY scripts
+  USE_SOURCE_PERMISSIONS
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ament_export_targets(

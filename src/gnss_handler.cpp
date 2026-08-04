@@ -1,4 +1,4 @@
-#include <mrs_uav_diagnostics_sensors/sensor_plugins/gnss_handler.hpp>
+#include <mrs_uav_diagnostics_sensors/gnss_handler.hpp>
 
 #include <mrs_uav_diagnostics_sensors/utils/detail_builder.hpp>
 #include <mrs_uav_diagnostics_sensors/utils/plugin_config.hpp>
