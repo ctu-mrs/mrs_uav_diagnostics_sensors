@@ -26,15 +26,11 @@ public:
 
 
 private:
-  std::string _fcu_frame_;
-
   mrs_lib::SubscriberHandler<sensor_msgs::msg::CameraInfo>     sh_camera_info_;
   mrs_lib::SubscriberHandler<std_msgs::msg::Float32MultiArray> sh_camera_gimbal_orientation_;
   std::atomic_bool                                             use_camera_gimbal_orientation_ = false;
 
   mrs_lib::PublisherHandler<mrs_msgs::msg::SensorInfo> ph_camera_details_;
-
-  std::unique_ptr<mrs_lib::Transformer> transformer_;
 };
 
 } // namespace mrs_uav_diagnostics_sensors

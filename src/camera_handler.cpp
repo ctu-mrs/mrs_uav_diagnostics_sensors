@@ -14,7 +14,7 @@ namespace mrs_uav_diagnostics_sensors
 {
 /* onInitialize() //{ */
 
-bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space,
+bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, [[maybe_unused]] const std::string &name_space,
                                        const std::string &plugin_config_path, rclcpp::CallbackGroup::SharedPtr cbkgrp_subs) {
 
   mrs_lib::ParamLoader param_loader(node, "CameraSensorHandler");
@@ -31,15 +31,11 @@ bool CameraSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std:
   std::string sensor_info_publisher_topic;
   param_loader.loadParam(config_key + "/sensor_info_publisher_topic", sensor_info_publisher_topic, std::string("~/sensor_info"));
 
-  param_loader.loadParam(config_key + "/fcu_frame", _fcu_frame_, std::string(name_space + "/fcu"));
-
   if (!param_loader.loadedSuccessfully()) {
     RCLCPP_ERROR(node->get_logger(), "[%s]: failed to load config, not initializing", name_.c_str());
     error_publisher_->addOneshotError("Failed to load config for " + name_);
     return false;
   }
-
-  transformer_ = std::make_unique<mrs_lib::Transformer>(node);
 
   // Create subscriber
   RCLCPP_INFO(node->get_logger(), "[%s]: initializing, topic: '%s'", name_.c_str(), topic_.c_str());
@@ -85,7 +81,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
       camera_info_json["fov_y_rad"] = 2 * atan(height / (2 * fy));
     }
 
-    const auto res_tf = transformer_->getTransform(sh_camera_info_.getMsg()->header.frame_id, _fcu_frame_, rclcpp::Time(0));
+    const auto res_tf = transformer_->getTransform(sh_camera_info_.getMsg()->header.frame_id, body_frame_);
     if (res_tf.has_value()) {
       const auto &transform = res_tf.value();
       double      x         = transform.transform.translation.x;
@@ -108,7 +104,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
       }
     } else {
       RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: failed to get transform from '%s' to '%s'", name_.c_str(),
-                  sh_camera_info_.getMsg()->header.frame_id.c_str(), _fcu_frame_.c_str());
+                  sh_camera_info_.getMsg()->header.frame_id.c_str(), body_frame_.c_str());
     }
   }
 
