@@ -5,4 +5,3 @@ mrs_uav_managers:
         # CameraSensorHandler-specific fields (all optional, defaults apply if omitted):
         # gimbal_orientation_topic: ""
         # sensor_info_publisher_topic: "~/sensor_info"
-        # fcu_frame: "<robot_name>/fcu"

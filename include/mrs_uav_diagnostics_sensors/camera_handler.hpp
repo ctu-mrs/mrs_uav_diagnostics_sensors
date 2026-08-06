@@ -1,7 +1,6 @@
 #pragma once
 
 #include <atomic>
-#include <memory>
 
 #include <mrs_uav_managers/diagnostics_manager/diagnostics_sensor_handler.hpp>
 
@@ -9,8 +8,6 @@
 #include <std_msgs/msg/float32_multi_array.hpp>
 
 #include <mrs_msgs/msg/sensor_info.hpp>
-
-#include <mrs_lib/transformer.h>
 
 namespace mrs_uav_diagnostics_sensors
 {
