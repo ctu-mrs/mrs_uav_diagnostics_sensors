@@ -9,6 +9,8 @@ namespace mrs_uav_diagnostics_sensors
 
 class GenericSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
 public:
+  // Loads the required message_type config field and creates a type-erased generic subscription for it on the main topic --
+  // status is rate/staleness only (fill_details() is not overridden), since the message type isn't known at compile time.
   bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space, const std::string &plugin_config_path,
                     rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override final;
 

@@ -8,9 +8,11 @@ namespace mrs_uav_diagnostics_sensors
 
 class RemoteControllerSensorHandler : public mrs_uav_managers::diagnostics_manager::DiagnosticsSensorHandler {
 public:
+  // No plugin-specific config fields; subscribes to HwApiRcRssi on the main topic.
   bool onInitialize(rclcpp::Node::SharedPtr &node, const std::string &config_key, const std::string &name_space, const std::string &plugin_config_path,
                     rclcpp::CallbackGroup::SharedPtr cbkgrp_subs = nullptr) override;
 
+  // Reports the RC signal's rssi value, or "nan" if no message has arrived yet.
   std::vector<diagnostic_msgs::msg::KeyValue> fill_details() override;
 
 private:
