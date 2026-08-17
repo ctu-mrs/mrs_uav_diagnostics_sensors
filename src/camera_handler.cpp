@@ -81,30 +81,34 @@ std::vector<diagnostic_msgs::msg::KeyValue> CameraSensorHandler::fill_details() 
       camera_info_json["fov_y_rad"] = 2 * atan(height / (2 * fy));
     }
 
-    const auto res_tf = transformer_->getTransform(sh_camera_info_.getMsg()->header.frame_id, body_frame_);
-    if (res_tf.has_value()) {
-      const auto &transform = res_tf.value();
-      double      x         = transform.transform.translation.x;
-      double      y         = transform.transform.translation.y;
-      double      z         = transform.transform.translation.z;
+    // transformer_ is null when no active sensor handler has check_frame_transform enabled; in that
+    // case just skip the tf-derived fields instead of warning about an expected, static config state
+    if (transformer_) {
+      const auto res_tf = transformer_->getTransform(sh_camera_info_.getMsg()->header.frame_id, body_frame_);
+      if (res_tf.has_value()) {
+        const auto &transform = res_tf.value();
+        double      x         = transform.transform.translation.x;
+        double      y         = transform.transform.translation.y;
+        double      z         = transform.transform.translation.z;
 
-      try {
-        mrs_lib::AttitudeConverter attitude(transform.transform.rotation);
-        const double               roll  = attitude.getRoll();
-        const double               pitch = attitude.getPitch();
-        const double               yaw   = attitude.getYaw();
+        try {
+          mrs_lib::AttitudeConverter attitude(transform.transform.rotation);
+          const double               roll  = attitude.getRoll();
+          const double               pitch = attitude.getPitch();
+          const double               yaw   = attitude.getYaw();
 
-        camera_tf_json = {
-            {"translation", {{"x", x}, {"y", y}, {"z", z}}},
-            {"rotation_rpy", {{"roll", roll}, {"pitch", pitch}, {"yaw", yaw}}},
-        };
+          camera_tf_json = {
+              {"translation", {{"x", x}, {"y", y}, {"z", z}}},
+              {"rotation_rpy", {{"roll", roll}, {"pitch", pitch}, {"yaw", yaw}}},
+          };
+        }
+        catch (const mrs_lib::AttitudeConverter::InvalidAttitudeException &ex) {
+          RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: %s", name_.c_str(), ex.what());
+        }
+      } else {
+        RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: failed to get transform from '%s' to '%s'", name_.c_str(),
+                    sh_camera_info_.getMsg()->header.frame_id.c_str(), body_frame_.c_str());
       }
-      catch (const mrs_lib::AttitudeConverter::InvalidAttitudeException &ex) {
-        RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: %s", name_.c_str(), ex.what());
-      }
-    } else {
-      RCLCPP_WARN(shopts_.node->get_logger(), "[%s]: failed to get transform from '%s' to '%s'", name_.c_str(),
-                  sh_camera_info_.getMsg()->header.frame_id.c_str(), body_frame_.c_str());
     }
   }
 
