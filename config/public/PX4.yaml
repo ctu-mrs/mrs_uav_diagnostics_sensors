@@ -1,5 +1,0 @@
-mrs_uav_managers:
-  diagnostics_manager:
-    sensor_handlers:
-      PX4:
-        message_type: "mrs_msgs/msg/HwApiStatus"
