@@ -20,7 +20,7 @@ bool GenericSensorHandler::onInitialize(rclcpp::Node::SharedPtr &node, const std
 
   if (!param_loader.loadedSuccessfully()) {
     RCLCPP_ERROR(node->get_logger(), "[%s]: failed to load config, not initializing", config_key.c_str());
-    error_publisher_->addOneshotError("Failed to load config for " + name_);
+    error_publisher_->addOneshotError("Failed to load config", name_);
     return false;
   }
 
