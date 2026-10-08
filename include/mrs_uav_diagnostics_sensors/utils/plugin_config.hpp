@@ -36,7 +36,8 @@ inline void resolvePluginConfig(mrs_lib::ParamLoader &param_loader, const std::s
   param_loader.addYamlFileFromParam("public_sensor_handlers");
 
   if (plugin_config_path.empty()) {
-    const std::string default_config_path = ament_index_cpp::get_package_share_directory("mrs_uav_diagnostics_sensors") + "/config/public/" + config_key + ".yaml";
+    const std::string default_config_path =
+        ament_index_cpp::get_package_share_directory("mrs_uav_diagnostics_sensors") + "/config/public/" + config_key + ".yaml";
     if (std::filesystem::exists(default_config_path)) {
       param_loader.addYamlFile(default_config_path);
     }
