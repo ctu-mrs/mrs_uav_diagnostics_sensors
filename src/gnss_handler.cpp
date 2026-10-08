@@ -53,7 +53,7 @@ std::vector<diagnostic_msgs::msg::KeyValue> GNSSSensorHandler::fill_details() {
   details.push_back(make_detail("uncertainty", uncertainty));
   details.push_back(make_detail("quality", quality));
 
-  if (!gnss_status_msg || !isTopicFresh(shopts_.node->get_clock()->now(), sh_gnss_status_.lastMsgTime())) {
+  if (!gnss_status_msg || !isReporting(shopts_.node->get_clock()->now(), sh_gnss_status_.lastMsgTime())) {
     details.push_back(make_detail("fix_type", "nan"));
     details.push_back(make_detail("num_satellites", "nan"));
     details.push_back(make_detail("position_accuracy", "nan"));
